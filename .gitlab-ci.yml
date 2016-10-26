@@ -1,0 +1,32 @@
+before_scribe:
+  - /usr/local/bin/dockerd-entrypoint.sh &
+
+after_script:
+  - echo "after_script"
+
+stages:
+  - build
+  - test
+  - deploy
+
+build:
+  stage: build
+  script:
+    - go build -o hello main.go
+  tags:
+    - eagle
+
+test:
+  stage: test
+  script:
+    - echo "test"
+  tags:
+    - eagle
+
+deploy:
+  stage: deploy
+  script:
+    - docker build -t docker.gf.com.cn/hello .
+    - docker push docker.gf.com.cn/hello
+  tags:
+    - eagle
