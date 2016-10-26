@@ -1,5 +1,5 @@
 before_script:
-  - /usr/local/bin/dockerd-entrypoint.sh &
+  - echo "before_script"
 
 after_script:
   - echo "after_script"
@@ -12,16 +12,16 @@ stages:
 build:
   stage: build
   script:
-    - go build -o hello main.go
+    - godep go build -o hello main.go
   tags:
-    - eagle
+    - eagle.build
 
 test:
   stage: test
   script:
     - echo "test"
   tags:
-    - eagle
+    - eagle.build
 
 deploy:
   stage: deploy
@@ -29,4 +29,4 @@ deploy:
     - docker build -t docker.gf.com.cn/hello .
     - docker push docker.gf.com.cn/hello
   tags:
-    - eagle
+    - eagle.build
