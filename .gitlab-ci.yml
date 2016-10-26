@@ -1,4 +1,4 @@
-before_scribe:
+before_script:
   - /usr/local/bin/dockerd-entrypoint.sh &
 
 after_script:
