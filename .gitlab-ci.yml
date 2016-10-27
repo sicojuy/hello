@@ -1,5 +1,6 @@
 before_script:
   - env
+  - pwd
 
 after_script:
   - echo "after_script"
