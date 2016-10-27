@@ -10,6 +10,10 @@ import (
     "github.com/valyala/fasthttp"
 )
 
+const (
+    VERSION	string = "1.0.0"
+)
+
 var (
     port int
 )
@@ -19,6 +23,7 @@ func usage(ctx *fasthttp.RequestCtx) {
     fmt.Fprintf(ctx, "  %-20s %s\n", "/hello", "say hello")
     fmt.Fprintf(ctx, "  %-20s %s\n", "/info", "show request info")
     fmt.Fprintf(ctx, "  %-20s %s\n", "/redirect?t=<url>", "redirect to url")
+    fmt.Fprintf(ctx, "  %-20s %s\n", "/version", "show version")
 }
 
 func helloHandler(ctx *fasthttp.RequestCtx) {
@@ -53,6 +58,8 @@ func handler(ctx *fasthttp.RequestCtx) {
 	helloHandler(ctx)
     case "/redirect":
 	redirectHandler(ctx)
+    case "/version":
+	fmt.Fprintf(ctx, "%s\n", VERSION)
     default:
 	usage(ctx)
     }
