@@ -1,6 +1,9 @@
 before_script:
-  - ln -s "${CI_PROJECT_DIR}/vendor/"* "${GOPATH}/src/"
+  - ln -s "${CI_PROJECT_DIR}" "${GOPATH}/src/${CI_PROJECT_NAME}"
+  - cd "${GOPATH}/src/${CI_PROJECT_NAME}"
+  #- ln -s "${CI_PROJECT_DIR}/vendor/"* "${GOPATH}/src/"
   - env
+  - pwd
 
 after_script:
   - echo "after_script"
