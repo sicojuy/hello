@@ -7,8 +7,6 @@ import (
     "runtime"
     "net/url"
 
-    "hello/foo"
-
     "github.com/valyala/fasthttp"
 )
 
@@ -68,8 +66,6 @@ func init() {
 
 func main() {
     flag.Parse()
-
-    foo.Foo()
 
     log.Printf("listen on %d", port)
 
