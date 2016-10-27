@@ -1,5 +1,6 @@
 before_script:
   - ln -s "${CI_PROJECT_DIR}/vendor/"* "${GOPATH}/src/"
+  - env
 
 after_script:
   - echo "after_script"
