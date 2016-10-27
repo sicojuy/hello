@@ -11,6 +11,8 @@ stages:
   - deploy
 
 build:
+  variables:
+    CI_PROJECT_DIR: "/opt/src"
   stage: build
   script:
     - go build -o hello main.go
