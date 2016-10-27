@@ -1,6 +1,5 @@
 before_script:
-  - env
-  - pwd
+  - ln -s "${CI_PROJECT_DIR}/vendor/"* "${GOPATH}/src/"
 
 after_script:
   - echo "after_script"
@@ -11,8 +10,6 @@ stages:
   - deploy
 
 build:
-  variables:
-    CI_PROJECT_DIR: "/opt/src"
   stage: build
   script:
     - go build -o hello main.go
