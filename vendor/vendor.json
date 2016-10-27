@@ -3,22 +3,22 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "fh+CcgeUUsnuwSORHYWg0ycbp+4=",
+			"checksumSHA1": "nfsPW9mmBQaK2gKbfRwXlRZmeuM=",
 			"path": "github.com/klauspost/compress/flate",
-			"revision": "8df558b6cb6f9b445f9586446cfe7223e7d8bd6b",
-			"revisionTime": "2016-10-25T14:04:25Z"
+			"revision": "14eb9c4951195779ecfbec34431a976de7335b0a",
+			"revisionTime": "2016-04-21T08:16:54Z"
 		},
 		{
-			"checksumSHA1": "V1lQwkoDR1fPmZBSgkmZjgZofeU=",
+			"checksumSHA1": "fwC1ob/fwvPkjuwAusYPDwdwBUU=",
 			"path": "github.com/klauspost/compress/gzip",
-			"revision": "8df558b6cb6f9b445f9586446cfe7223e7d8bd6b",
-			"revisionTime": "2016-10-25T14:04:25Z"
+			"revision": "14eb9c4951195779ecfbec34431a976de7335b0a",
+			"revisionTime": "2016-04-21T08:16:54Z"
 		},
 		{
-			"checksumSHA1": "+azPXaZpPF14YHRghNAer13ThQU=",
+			"checksumSHA1": "MSfzKJkDgCfuW95gPLm4wbf08Q4=",
 			"path": "github.com/klauspost/compress/zlib",
-			"revision": "8df558b6cb6f9b445f9586446cfe7223e7d8bd6b",
-			"revisionTime": "2016-10-25T14:04:25Z"
+			"revision": "14eb9c4951195779ecfbec34431a976de7335b0a",
+			"revisionTime": "2016-04-21T08:16:54Z"
 		},
 		{
 			"checksumSHA1": "iKPMvbAueGfdyHcWCgzwKzm8WVo=",
@@ -27,10 +27,10 @@
 			"revisionTime": "2016-03-02T07:53:16Z"
 		},
 		{
-			"checksumSHA1": "BM6ZlNJmtKy3GBoWwg2X55gnZ4A=",
+			"checksumSHA1": "hX+j017F4PEtIUGflAneDtLC6hs=",
 			"path": "github.com/klauspost/crc32",
-			"revision": "cb6bfca970f6908083f26f39a79009d608efd5cd",
-			"revisionTime": "2016-10-16T15:41:25Z"
+			"revision": "19b0b332c9e4516a6370a0456e6182c3b5036720",
+			"revisionTime": "2016-02-19T14:26:09Z"
 		},
 		{
 			"checksumSHA1": "LTOa3BADhwvT0wFCknPueQALm8I=",

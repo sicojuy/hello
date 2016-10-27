@@ -15,7 +15,6 @@ build:
   script:
     - go build -o hello main.go
     - docker build -t docker.gf.com.cn/hello .
-    - docker push docker.gf.com.cn/hello
   tags:
     - eagle.build
 
