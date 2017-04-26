@@ -1,80 +1,73 @@
 package main
 
 import (
-    "log"
-    "fmt"
-    "flag"
-    "runtime"
-    "net/url"
-
-    "github.com/valyala/fasthttp"
-)
-
-const (
-    VERSION	string = "1.0.0"
+	"flag"
+	"fmt"
+	"log"
+	"net/http"
+	"strconv"
+	"strings"
+	"time"
 )
 
 var (
-    port int
+	addr string
 )
 
-func usage(ctx *fasthttp.RequestCtx) {
-    fmt.Fprintf(ctx, "Usage:\n")
-    fmt.Fprintf(ctx, "  %-20s %s\n", "/hello", "say hello")
-    fmt.Fprintf(ctx, "  %-20s %s\n", "/info", "show request info")
-    fmt.Fprintf(ctx, "  %-20s %s\n", "/redirect?t=<url>", "redirect to url")
-    fmt.Fprintf(ctx, "  %-20s %s\n", "/version", "show version")
+func usageHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Usage:\n")
+	fmt.Fprintf(w, "  %-30s %s\n", "/hello", "just say hello")
+	fmt.Fprintf(w, "  %-30s %s\n", "/info", "show request line and headers")
+	fmt.Fprintf(w, "  %-30s %s\n", "/redirect?target=<url>", "response 302 to target")
 }
 
-func helloHandler(ctx *fasthttp.RequestCtx) {
-    fmt.Fprintf(ctx, "hello\n")
+func helloHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("hello\n"))
 }
 
-func infoHandler(ctx *fasthttp.RequestCtx) {
-    fmt.Fprintf(ctx, "%s", ctx.Request.Header.Header())
+func infoHandler(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "%s %s %s\n", r.Method, r.RequestURI, r.Proto)
+	for k, v := range r.Header {
+		fmt.Fprintf(w, "%s: %v\n", k, strings.Join(v, ","))
+	}
+	fmt.Fprintf(w, "\n")
+
+	fmt.Fprintf(w, "client addr: %s\n", r.RemoteAddr)
+	fmt.Fprintf(w, "\n")
+
+	args := r.URL.Query()
+	t := args.Get("t")
+	if len(t) > 0 {
+		if v, err := strconv.Atoi(t); err == nil && v > 0 {
+			time.Sleep(time.Duration(v) * time.Second)
+		}
+	}
 }
 
-func redirectHandler(ctx *fasthttp.RequestCtx) {
-    args, err := url.ParseQuery(ctx.QueryArgs().String())
-    if err != nil {
-	fmt.Fprintf(ctx, "parameters error: %s", err)
-	return
-    }
-
-    t := args.Get("t")
-    if t == "" {
-	fmt.Fprintf(ctx, "miss parameter 't'")
-	return
-    }
-
-    ctx.Redirect(t, 302)
-}
-
-func handler(ctx *fasthttp.RequestCtx) {
-    switch string(ctx.Path()) {
-    case "/info":
-	infoHandler(ctx)
-    case "/hello":
-	helloHandler(ctx)
-    case "/redirect":
-	redirectHandler(ctx)
-    case "/version":
-	fmt.Fprintf(ctx, "%s\n", VERSION)
-    default:
-	usage(ctx)
-    }
+func redirectHandler(w http.ResponseWriter, r *http.Request) {
+	args := r.URL.Query()
+	t := args.Get("target")
+	if len(t) == 0 {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte("target not found\n"))
+		return
+	}
+	w.Header().Set("Location", t)
+	w.WriteHeader(http.StatusFound)
 }
 
 func init() {
-    flag.IntVar(&port, "p", 9000, "server listen on")
-
-    runtime.GOMAXPROCS(4)
+	flag.StringVar(&addr, "addr", ":9000", "server listen on")
 }
 
 func main() {
-    flag.Parse()
+	flag.Parse()
 
-    log.Printf("listen on %d", port)
+	http.HandleFunc("/hello", helloHandler)
+	http.HandleFunc("/info", infoHandler)
+	http.HandleFunc("/redirect", redirectHandler)
+	http.HandleFunc("/", usageHandler)
 
-    log.Fatal(fasthttp.ListenAndServe(fmt.Sprintf(":%d", port), handler))
+	log.Printf("listen on %s", addr)
+	log.Fatal(http.ListenAndServe(addr, nil))
 }
