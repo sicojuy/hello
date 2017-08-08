@@ -10,6 +10,10 @@ import (
 	"time"
 )
 
+const (
+	VERSION string = "1.0.2"
+)
+
 var (
 	addr string
 )
@@ -19,6 +23,7 @@ func usageHandler(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "  %-30s %s\n", "/hello", "just say hello")
 	fmt.Fprintf(w, "  %-30s %s\n", "/info", "show request line and headers")
 	fmt.Fprintf(w, "  %-30s %s\n", "/redirect?target=<url>", "response 302 to target")
+	fmt.Fprintf(w, "  %-30s %s\n", "/slow?t=<seconds>", "response after t seconds")
 }
 
 func helloHandler(w http.ResponseWriter, r *http.Request) {
@@ -56,6 +61,19 @@ func redirectHandler(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusFound)
 }
 
+func slowHandler(w http.ResponseWriter, r *http.Request) {
+	args := r.URL.Query()
+	t := args.Get("t")
+	var secs int
+	if len(t) > 0 {
+		secs, _ = strconv.Atoi(t)
+	}
+	if secs > 0 {
+		time.Sleep(time.Duration(secs) * time.Second)
+	}
+	w.Write([]byte("ok\n"))
+}
+
 func init() {
 	flag.StringVar(&addr, "addr", ":9000", "server listen on")
 }
@@ -66,6 +84,10 @@ func main() {
 	http.HandleFunc("/hello", helloHandler)
 	http.HandleFunc("/info", infoHandler)
 	http.HandleFunc("/redirect", redirectHandler)
+	http.HandleFunc("/slow", slowHandler)
+	http.HandleFunc("/version", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprintln(w, VERSION)
+	})
 	http.HandleFunc("/", usageHandler)
 
 	log.Printf("listen on %s", addr)
