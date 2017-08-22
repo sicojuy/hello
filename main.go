@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
+	"github.com/golang/glog"
 	"net/http"
 	"strconv"
 	"strings"
@@ -79,6 +79,7 @@ func init() {
 }
 
 func main() {
+	flag.Set("logtostderr", "true")
 	flag.Parse()
 
 	http.HandleFunc("/hello", helloHandler)
@@ -89,7 +90,6 @@ func main() {
 		fmt.Fprintln(w, VERSION)
 	})
 	http.HandleFunc("/", usageHandler)
-
-	log.Printf("listen on %s", addr)
-	log.Fatal(http.ListenAndServe(addr, nil))
+	glog.Infof("listen on %s", addr)
+	glog.Fatal(http.ListenAndServe(addr, nil))
 }

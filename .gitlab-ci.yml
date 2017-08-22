@@ -1,23 +1,12 @@
 stages:
   - build
-  - test
 
 build:
   stage: build
-  image: 'docker.gf.com.cn/go:1.8.1'
+  image: 'docker.gf.com.cn/docker-go'
   script:
     - ln -s "${CI_PROJECT_DIR}" "${GOPATH}/src/${CI_PROJECT_NAME}"
     - go build -o hello main.go
-    - ls .
+    - docker build docker.gf.com.cn/just4test/hello .
   tags:
     - docker
-
-test:
-  stage: test
-  image: 'docker.gf.com.cn/docker:1.12.6'
-  script:
-    - docker info
-  tags:
-    - docker
-  volumes:
-    - /var/run/docker.sock:/var/run/docker.sock
