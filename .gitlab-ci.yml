@@ -14,8 +14,9 @@ build:
 
 test:
   stage: test
-  image: 'docker.gf.com.cn/docker:1.8.1'
+  image: 'docker.gf.com.cn/docker:1.12.6'
   script:
+    - ls .
     - docker info
   tags:
     - docker
