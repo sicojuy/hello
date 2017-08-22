@@ -5,14 +5,15 @@ stages:
 build:
   stage: build
   script:
-    - echo "build"
-    - env
+    - ln -s $(pwd) $GOPATH/src/$CI_PROJECT_NAME
+    - go build
+    - ls .
   tags:
-    - ubuntu
+    - go
 
 test:
   stage: test
   script:
-    - echo "test"
+    - docker info
   tags:
-    - ubuntu
+    - docker
