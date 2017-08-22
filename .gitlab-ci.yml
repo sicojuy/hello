@@ -1,6 +1,5 @@
 before_script:
-  - ln -s "${CI_PROJECT_DIR}" "${GOPATH}/src/${CI_PROJECT_NAME}"
-  - cd "${GOPATH}/src/${CI_PROJECT_NAME}"
+  - echo "before_script"
 
 after_script:
   - echo "after_script"
@@ -13,22 +12,20 @@ stages:
 build:
   stage: build
   script:
-    - go build -o hello main.go
-    - docker build -t docker.gf.com.cn/dev/hello .
-    - docker push docker.gf.com.cn/dev/hello
+    - echo "build"
   tags:
-    - eagle.build
+    - hello
 
 test:
   stage: test
   script:
     - echo "test"
   tags:
-    - eagle.build
+    - hello
 
 deploy:
   stage: deploy
   script:
     - echo "deploy"
   tags:
-    - eagle.build
+    - hello
