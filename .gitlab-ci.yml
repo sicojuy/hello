@@ -9,14 +9,10 @@ build:
     - ln -s "${CI_PROJECT_DIR}" "${GOPATH}/src/${CI_PROJECT_NAME}"
     - go build -o hello main.go
     - ls .
-  tags:
-    - docker
 
 test:
   stage: test
   image: 'docker.gf.com.cn/docker:1.12.6'
   script:
-    - env
+    - ls .
     - docker info
-  tags:
-    - docker
