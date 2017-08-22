@@ -4,15 +4,19 @@ stages:
 
 build:
   stage: build
+  image: 'docker.gf.com.cn/go:1.8.1'
   script:
     - ln -s $(pwd) $GOPATH/src/$CI_PROJECT_NAME
     - go build
     - ls .
   tags:
-    - go
+    - docker
 
 test:
   stage: test
+  image: 'docker.gf.com.cn/docker:1.8.1'
+  volumes:
+    - '/var/run/docker.sock:/var/run/docker.sock'
   script:
     - docker info
   tags:
