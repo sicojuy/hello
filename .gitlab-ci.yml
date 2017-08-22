@@ -1,3 +1,6 @@
+before_script:
+- docker version
+
 stages:
   - build
   - test
@@ -14,5 +17,4 @@ test:
   stage: test
   image: 'docker.gf.com.cn/docker:1.12.6'
   script:
-    - ls .
     - docker info
