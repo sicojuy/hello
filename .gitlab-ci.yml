@@ -6,7 +6,7 @@ build:
   stage: build
   script:
     - echo "build"
-    - ls /
+    - docker version
   tags:
     - ubuntu
 
