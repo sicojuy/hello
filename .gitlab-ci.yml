@@ -1,31 +1,18 @@
-before_script:
-  - echo "before_script"
-
-after_script:
-  - echo "after_script"
-
 stages:
   - build
   - test
-  - deploy
 
 build:
   stage: build
   script:
     - echo "build"
+    - ls /
   tags:
-    - hello
+    - ubuntu
 
 test:
   stage: test
   script:
     - echo "test"
   tags:
-    - hello
-
-deploy:
-  stage: deploy
-  script:
-    - echo "deploy"
-  tags:
-    - hello
+    - ubuntu
