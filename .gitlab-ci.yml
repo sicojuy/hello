@@ -15,8 +15,6 @@ build:
 test:
   stage: test
   image: 'docker.gf.com.cn/docker:1.8.1'
-  volumes:
-    - '/var/run/docker.sock:/var/run/docker.sock'
   script:
     - docker info
   tags:
