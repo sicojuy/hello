@@ -1,6 +1,3 @@
-before_script:
-- docker version
-
 stages:
   - build
   - test
