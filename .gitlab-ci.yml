@@ -1,12 +1,14 @@
 stages:
   - build
+  
+services:
+  docker.gf.com.cn/docker:1.12.6
 
 build:
   stage: build
   image: 'docker.gf.com.cn/docker-go'
   script:
     - ln -s "${CI_PROJECT_DIR}" "${GOPATH}/src/${CI_PROJECT_NAME}"
-    - go build -o hello main.go
-    - docker build docker.gf.com.cn/just4test/hello .
+    - docker version
   tags:
-    - docker
+    - test
