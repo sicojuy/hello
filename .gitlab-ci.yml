@@ -2,7 +2,7 @@ stages:
   - build
   
 services:
-  docker.gf.com.cn/docker:1.12.6
+  - docker.gf.com.cn/docker:1.12.6
 
 build:
   stage: build
