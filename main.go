@@ -3,11 +3,12 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/golang/glog"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/golang/glog"
 )
 
 const (
